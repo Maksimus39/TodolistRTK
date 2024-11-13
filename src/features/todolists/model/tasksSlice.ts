@@ -1,12 +1,11 @@
+import { createSlice } from "@reduxjs/toolkit"
 import { ResultCode } from "common/enums"
-import { handleServerAppError } from "common/utils/handleServerAppError"
-import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
+import { handleServerAppError, handleServerNetworkError } from "common/utils"
 import { Dispatch } from "redux"
+import { setAppStatus } from "../../../app/appSlice"
 import { RootState } from "../../../app/store"
 import { tasksApi } from "../api/tasksApi"
 import { DomainTask, UpdateTaskDomainModel, UpdateTaskModel } from "../api/tasksApi.types"
-import { setAppStatus } from "../../../app/appSlice"
-import { createSlice } from "@reduxjs/toolkit"
 import { addTodolist, removeTodolist } from "./todolistsSlice"
 
 export type TasksStateType = {
@@ -27,20 +26,22 @@ export const tasksSlice = createSlice({
         tasks.splice(index, 1)
       }
     }),
-    addTask:create.reducer<{ task: DomainTask}>((state, action)=>{
+    addTask: create.reducer<{ task: DomainTask }>((state, action) => {
       const tasks = state[action.payload.task.todoListId]
       tasks.unshift(action.payload.task)
     }),
-    updateTask:create.reducer<{taskId: string; todolistId: string; domainModel: UpdateTaskDomainModel}>((state, action)=>{
-      const tasks = state[action.payload.todolistId]
-      const index = tasks.findIndex(t=>t.id===action.payload.taskId)
-      if(index!==-1){
-        tasks[index]={...tasks[index],...action.payload.domainModel}
-      }
-    }),
-    clearTasks:create.reducer(()=>{
+    updateTask: create.reducer<{ taskId: string; todolistId: string; domainModel: UpdateTaskDomainModel }>(
+      (state, action) => {
+        const tasks = state[action.payload.todolistId]
+        const index = tasks.findIndex((t) => t.id === action.payload.taskId)
+        if (index !== -1) {
+          tasks[index] = { ...tasks[index], ...action.payload.domainModel }
+        }
+      },
+    ),
+    clearTasks: create.reducer(() => {
       return {}
-    })
+    }),
   }),
   extraReducers: (builder) => {
     builder
@@ -51,12 +52,10 @@ export const tasksSlice = createSlice({
         delete state[action.payload.id]
       })
   },
+  selectors: {
+    selectTasks: (state) => state,
+  },
 })
-
-export const {addTask,clearTasks,removeTask,updateTask,setTasks} = tasksSlice.actions
-export const tasksReducer = tasksSlice.reducer
-
-
 
 // Thunks
 export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
@@ -71,6 +70,7 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
       handleServerNetworkError(error, dispatch)
     })
 }
+
 export const removeTaskTC = (arg: { taskId: string; todolistId: string }) => (dispatch: Dispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
   tasksApi
@@ -139,3 +139,7 @@ export const updateTaskTC =
         })
     }
   }
+
+export const { setTasks, removeTask, addTask, clearTasks, updateTask } = tasksSlice.actions
+export const { selectTasks } = tasksSlice.selectors
+export const tasksReducer = tasksSlice.reducer

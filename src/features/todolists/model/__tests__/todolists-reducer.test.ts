@@ -1,8 +1,11 @@
 import { Todolist } from "../../api/todolistsApi.types"
 import {
-  addTodolist, changeTodolistFilter, changeTodolistTitle,
-  DomainTodolist, removeTodolist, todolistsReducer,
-  todolistsSlice
+  addTodolist,
+  changeTodolistFilter,
+  changeTodolistTitle,
+  DomainTodolist,
+  removeTodolist,
+  todolistsReducer,
 } from "../todolistsSlice"
 import { v1 } from "uuid"
 
@@ -15,13 +18,13 @@ beforeEach(() => {
   todolistId2 = v1()
 
   startState = [
-    { id: todolistId1, title: "What to learn", filter: "all", addedDate: "", order: 0 ,entityStatus:'loading'},
-    { id: todolistId2, title: "What to buy", filter: "all", addedDate: "", order: 0,entityStatus:'loading' },
+    { id: todolistId1, title: "What to learn", filter: "all", addedDate: "", order: 0, entityStatus: "idle" },
+    { id: todolistId2, title: "What to buy", filter: "all", addedDate: "", order: 0, entityStatus: "idle" },
   ]
 })
 
 test("correct todolist should be removed", () => {
-  const endState = todolistsReducer(startState, removeTodolist({ id:todolistId1 }))
+  const endState = todolistsReducer(startState, removeTodolist({ id: todolistId1 }))
 
   expect(endState.length).toBe(1)
   expect(endState[0].id).toBe(todolistId2)

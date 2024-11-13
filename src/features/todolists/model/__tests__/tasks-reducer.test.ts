@@ -1,6 +1,6 @@
 import { TaskPriority, TaskStatus } from "common/enums"
-import { addTodolist, removeTodolist } from "../todolistsSlice"
 import { addTask, removeTask, tasksReducer, TasksStateType, updateTask } from "../tasksSlice"
+import { addTodolist, removeTodolist } from "../todolistsSlice"
 
 let startState: TasksStateType = {}
 

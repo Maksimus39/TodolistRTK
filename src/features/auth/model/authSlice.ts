@@ -1,16 +1,15 @@
+import { createSlice } from "@reduxjs/toolkit"
 import { ResultCode } from "common/enums"
-import { handleServerAppError } from "common/utils/handleServerAppError"
-import { handleServerNetworkError } from "common/utils/handleServerNetworkError"
+import { handleServerAppError, handleServerNetworkError } from "common/utils"
 import { Dispatch } from "redux"
+import { setAppStatus } from "../../../app/appSlice"
+import { clearTasks } from "../../todolists/model/tasksSlice"
+import { clearTodolists } from "../../todolists/model/todolistsSlice"
 import { authApi } from "../api/authAPI"
 import { LoginArgs } from "../api/authAPI.types"
-import { createSlice } from "@reduxjs/toolkit"
-import { setAppStatus } from "../../../app/appSlice"
-import { clearTodolists } from "../../todolists/model/todolistsSlice"
-import { clearTasks } from "../../todolists/model/tasksSlice"
 
 export const authSlice = createSlice({
-  name: "authorization",
+  name: "auth",
   initialState: {
     isLoggedIn: false,
     isInitialized: false,
@@ -29,11 +28,6 @@ export const authSlice = createSlice({
   },
 })
 
-export const { setIsLoggedIn, setIsInitialized } = authSlice.actions
-export const authReducer = authSlice.reducer
-export const {selectIsLoggedIn,selectIsInitialized}=authSlice.selectors
-
-// thunks
 export const loginTC = (data: LoginArgs) => (dispatch: Dispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
   authApi
@@ -51,6 +45,7 @@ export const loginTC = (data: LoginArgs) => (dispatch: Dispatch) => {
       handleServerNetworkError(error, dispatch)
     })
 }
+
 export const logoutTC = () => (dispatch: Dispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
   authApi
@@ -70,6 +65,7 @@ export const logoutTC = () => (dispatch: Dispatch) => {
       handleServerNetworkError(error, dispatch)
     })
 }
+
 export const initializeAppTC = () => (dispatch: Dispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
   authApi
@@ -89,3 +85,7 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
       dispatch(setIsInitialized({ isInitialized: true }))
     })
 }
+
+export const { setIsLoggedIn, setIsInitialized } = authSlice.actions
+export const { selectIsLoggedIn, selectIsInitialized } = authSlice.selectors
+export const authReducer = authSlice.reducer

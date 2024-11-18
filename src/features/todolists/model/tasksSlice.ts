@@ -70,7 +70,6 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
       handleServerNetworkError(error, dispatch)
     })
 }
-
 export const removeTaskTC = (arg: { taskId: string; todolistId: string }) => (dispatch: Dispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
   tasksApi

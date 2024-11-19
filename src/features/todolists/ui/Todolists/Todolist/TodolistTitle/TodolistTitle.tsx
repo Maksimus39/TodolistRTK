@@ -14,14 +14,11 @@ export const TodolistTitle = ({ todolist }: Props) => {
   const [updateTodolistTitle] = useUpdateTodolistTitleMutation()
   const [removeTodolist] = useRemoveTodolistMutation()
 
-  // const dispatch = useAppDispatch()
 
   const removeTodolistHandler = () => {
-    // dispatch(removeTodolistTC(id))
     removeTodolist(id)
   }
   const updateTodolistHandler = (title: string) => {
-    // dispatch(updateTodolistTitleTC({ id, title }))
     updateTodolistTitle({ id, title })
   }
 

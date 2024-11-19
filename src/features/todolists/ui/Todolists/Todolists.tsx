@@ -4,31 +4,16 @@ import { Todolist } from "./Todolist/Todolist"
 import { useGetTodolistsQuery } from "../../api/todolistsApi"
 
 export const Todolists = () => {
-  // const todolists = useAppSelector(selectTodolists)
 
-  // const [skip, setSkip] = useState(true)
-  const { data: todolists } = useGetTodolistsQuery()
-  // const [trigger, { data: todolists }] = useLazyGetTodolistsQuery()
+  const { data: todolists} = useGetTodolistsQuery()
 
-  // const fetchTodolistHandler = () => {
-  //   setSkip(false)
-  // }
 
-  // const fetchTodolistHandler = () => {
-  //   trigger()
-  // }
 
-  // const dispatch = useAppDispatch()
 
-  // useEffect(() => {
-  //   dispatch(fetchTodolistsTC())
-  // }, [])
+
 
   return (
     <>
-      {/*<div>*/}
-      {/*  <button onClick={fetchTodolistHandler}>Загрузить тудулисты</button>*/}
-      {/*</div>*/}
       {todolists?.map((tl) => {
         return (
           <Grid key={tl.id}>

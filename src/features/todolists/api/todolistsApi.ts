@@ -45,21 +45,12 @@ export const todolistsApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { useGetTodolistsQuery, useAddTodolistMutation,useUpdateTodolistTitleMutation,useRemoveTodolistMutation } = todolistsApi
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export const {
+  useGetTodolistsQuery,
+  useAddTodolistMutation,
+  useUpdateTodolistTitleMutation,
+  useRemoveTodolistMutation,
+} = todolistsApi
 
 export const _todolistsApi = {
   // ok

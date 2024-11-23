@@ -13,11 +13,10 @@ import { ResultCode } from "common/enums"
 
 export const App = () => {
   const themeMode = useAppSelector(selectThemeMode)
- const [isInitialized,setIsInitialized] = useState<boolean>(false)
+  const [isInitialized, setIsInitialized] = useState<boolean>(false)
 
-  const { data,isLoading } = useMeQuery()
-const dispatch = useAppDispatch()
-
+  const { data, isLoading } = useMeQuery()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (!isLoading) {
@@ -27,7 +26,6 @@ const dispatch = useAppDispatch()
       }
     }
   }, [isLoading, data])
-
 
   return (
     <ThemeProvider theme={getTheme(themeMode)}>

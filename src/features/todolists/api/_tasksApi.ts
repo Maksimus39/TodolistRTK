@@ -5,26 +5,24 @@ import { baseApi } from "../../../app/baseApi"
 
 export const tasksApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getTasks: build.query<any, any>({
+    getTasks: build.query<GetTasksResponse, string>({
       query: (todolistId) => `todo-lists/${todolistId}/tasks`,
-      transformResponse: (response: GetTasksResponse) => response.items,
       providesTags: ["Task"],
+    }),
+    addTask: build.mutation<BaseResponse<{ item: DomainTask }>, { title: string; todolistId: string }>({
+      query: ({ todolistId, title }) => {
+        return {
+          url: `todo-lists/${todolistId}/tasks`,
+          method: "POST",
+          body: { title },
+        }
+      },
+      invalidatesTags:["Task"]
     }),
   }),
 })
 
-export const { useGetTasksQuery } = tasksApi
-
-
-
-
-
-
-
-
-
-
-
+export const { useGetTasksQuery,useAddTaskMutation } = tasksApi
 
 export const _tasksApi = {
   getTasks(todolistId: string) {

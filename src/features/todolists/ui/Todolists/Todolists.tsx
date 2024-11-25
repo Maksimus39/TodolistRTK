@@ -7,11 +7,6 @@ export const Todolists = () => {
 
   const { data: todolists} = useGetTodolistsQuery()
 
-
-
-
-
-
   return (
     <>
       {todolists?.map((tl) => {

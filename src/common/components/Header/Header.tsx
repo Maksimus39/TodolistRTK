@@ -10,8 +10,7 @@ import { getTheme } from "common/theme"
 import { MenuButton } from "common/components"
 import { useLogoutMutation } from "../../../features/auth/api/_authApi"
 import { ResultCode } from "common/enums"
-import { clearTasks } from "../../../features/todolists/model/tasksSlice"
-import { clearTodolists } from "../../../features/todolists/model/todolistsSlice"
+import { baseApi } from "../../../app/baseApi"
 
 export const Header = () => {
   const dispatch = useAppDispatch()
@@ -30,10 +29,10 @@ export const Header = () => {
     logout().then((res) => {
       if (res.data?.resultCode === ResultCode.Success) {
         dispatch(setIsLoggedIn({ isLoggedIn: false }))
-        dispatch(clearTasks())
-        dispatch(clearTodolists())
         localStorage.removeItem("sn-token")
       }
+    }).then(()=>{
+      dispatch(baseApi.util.invalidateTags(['Todolist','Task']))
     })
   }
 

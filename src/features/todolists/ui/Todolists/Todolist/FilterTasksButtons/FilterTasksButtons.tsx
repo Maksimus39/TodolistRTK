@@ -14,11 +14,6 @@ export const FilterTasksButtons = ({ todolist }: Props) => {
 
   const dispatch = useAppDispatch()
 
-  // const changeFilterTasksHandler = (filter: FilterValuesType) => {
-  //   dispatch(changeTodolistFilter({ id, filter }))
-  // }
-
-
   const changeFilterTasksHandler = (filter: FilterValuesType) => {
     dispatch(
       todolistsApi.util.updateQueryData(

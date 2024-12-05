@@ -5,7 +5,10 @@ import { useGetTodolistsQuery } from "../../api/todolistsApi"
 import { TodolistSkeleton } from "../skeletons/TodolistSkeleton/TodolistSkeleton"
 
 export const Todolists = () => {
-  const { data: todolists, isLoading } = useGetTodolistsQuery()
+  const { data: todolists, isLoading } = useGetTodolistsQuery(undefined,{
+    pollingInterval:100000,
+    skipPollingIfUnfocused:true
+  })
 
   if (isLoading) {
     return (

@@ -3,9 +3,6 @@ import { LoginArgs } from "../features/auth/api/authAPI.types"
 import { Dispatch } from "redux"
 import { _authApi } from "../features/auth/api/_authApi"
 import { ResultCode } from "common/enums"
-import { handleServerAppError, handleServerNetworkError } from "common/utils"
-import { clearTasks } from "../features/todolists/model/tasksSlice"
-import { clearTodolists } from "../features/todolists/model/todolistsSlice"
 import { tasksApi } from "../features/todolists/api/_tasksApi"
 import { todolistsApi } from "../features/todolists/api/todolistsApi"
 
@@ -47,22 +44,12 @@ export const appSlice = createSlice({
       })
       .addMatcher(
         isFulfilled(),
-        // (action) => {
-        //   // code
-        //   console.log("predicate---1:", action.type)
-        //   return action.type.endsWith("/fulfilled")
-        // },
         (state) => {
           state.status = "succeeded"
         },
       )
       .addMatcher(
         isRejected(),
-        // (action) => {
-        //   // code
-        //   console.log("predicate---1:", action.type)
-        //   return action.type.endsWith("/rejected")
-        // },
         (state) => {
           state.status = "failed"
         },
@@ -85,13 +72,9 @@ export const loginTC = (data: LoginArgs) => (dispatch: Dispatch) => {
         dispatch(setAppStatus({ status: "succeeded" }))
         dispatch(setIsLoggedIn({ isLoggedIn: true }))
         localStorage.setItem("sn-token", res.data.data.token)
-      } else {
-        handleServerAppError(res.data, dispatch)
       }
     })
-    .catch((error) => {
-      handleServerNetworkError(error, dispatch)
-    })
+
 }
 
 export const logoutTC = () => (dispatch: Dispatch) => {
@@ -102,15 +85,8 @@ export const logoutTC = () => (dispatch: Dispatch) => {
       if (res.data.resultCode === ResultCode.Success) {
         dispatch(setAppStatus({ status: "succeeded" }))
         dispatch(setIsLoggedIn({ isLoggedIn: false }))
-        dispatch(clearTasks())
-        dispatch(clearTodolists())
         localStorage.removeItem("sn-token")
-      } else {
-        handleServerAppError(res.data, dispatch)
       }
-    })
-    .catch((error) => {
-      handleServerNetworkError(error, dispatch)
     })
 }
 

@@ -52,29 +52,3 @@ export const {
   useRemoveTodolistMutation,
 } = todolistsApi
 
-
-
-
-
-
-
-
-
-export const _todolistsApi = {
-  // ok
-  getTodolists() {
-    return instance.get<Todolist[]>("todo-lists")
-  },
-  //
-  updateTodolist(payload: { id: string; title: string }) {
-    const { title, id } = payload
-    return instance.put<BaseResponse>(`todo-lists/${id}`, { title })
-  },
-  // ok
-  createTodolist(title: string) {
-    return instance.post<BaseResponse<{ item: Todolist }>>("todo-lists", { title })
-  },
-  deleteTodolist(id: string) {
-    return instance.delete<BaseResponse>(`todo-lists/${id}`)
-  },
-}

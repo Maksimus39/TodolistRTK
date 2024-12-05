@@ -1,8 +1,4 @@
 import { createSlice, isFulfilled, isPending, isRejected } from "@reduxjs/toolkit"
-import { LoginArgs } from "../features/auth/api/authAPI.types"
-import { Dispatch } from "redux"
-import { _authApi } from "../features/auth/api/_authApi"
-import { ResultCode } from "common/enums"
 import { tasksApi } from "../features/todolists/api/_tasksApi"
 import { todolistsApi } from "../features/todolists/api/todolistsApi"
 
@@ -63,33 +59,7 @@ export const appSlice = createSlice({
   },
 })
 
-export const loginTC = (data: LoginArgs) => (dispatch: Dispatch) => {
-  dispatch(setAppStatus({ status: "loading" }))
-  _authApi
-    .login(data)
-    .then((res) => {
-      if (res.data.resultCode === ResultCode.Success) {
-        dispatch(setAppStatus({ status: "succeeded" }))
-        dispatch(setIsLoggedIn({ isLoggedIn: true }))
-        localStorage.setItem("sn-token", res.data.data.token)
-      }
-    })
 
-}
-
-export const logoutTC = () => (dispatch: Dispatch) => {
-  dispatch(setAppStatus({ status: "loading" }))
-  _authApi
-    .logout()
-    .then((res) => {
-      if (res.data.resultCode === ResultCode.Success) {
-        dispatch(setAppStatus({ status: "succeeded" }))
-        dispatch(setIsLoggedIn({ isLoggedIn: false }))
-        localStorage.removeItem("sn-token")
-      }
-    })
-}
-
-export const { changeTheme, setAppError, setAppStatus, setIsLoggedIn } = appSlice.actions
+export const { changeTheme, setAppError, setIsLoggedIn } = appSlice.actions
 export const { selectAppStatus, selectAppError, selectThemeMode, selectIsLoggedIn } = appSlice.selectors
 export const appReducer = appSlice.reducer

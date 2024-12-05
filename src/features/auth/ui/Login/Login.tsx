@@ -1,20 +1,26 @@
-import React from 'react';
-import { Grid, FormControl, FormLabel } from '@mui/material';
+import { Navigate } from "react-router-dom"
+import { useLogin } from "../../lib/hooks/useLogin"
+import { FormControl, FormLabel, Grid } from "@mui/material"
+import { LoginFormLabel } from "./LoginFormLabel/LoginFormLabel"
+import { LoginForm } from "./LoginForm/LoginForm"
 
-const LoginFormLabel = () => <span>Login Form Label</span>;
+export const Login = () => {
+  const { isLoggedIn } = useLogin()
 
-const MyComponent = () => {
+  if (isLoggedIn) {
+    return <Navigate to={"/"} />
+  }
+
   return (
-    <Grid container justifyContent="center">
-      <Grid item xs={12} sm={6}>
+    <Grid container justifyContent={"center"}>
+      <Grid item justifyContent={"center"}>
         <FormControl>
           <FormLabel>
             <LoginFormLabel />
+            <LoginForm />
           </FormLabel>
         </FormControl>
       </Grid>
     </Grid>
-  );
-};
-
-export default MyComponent;
+  )
+}

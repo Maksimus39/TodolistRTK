@@ -1,4 +1,4 @@
-import { instance } from "common/instance"
+
 import { BaseResponse } from "common/types"
 import { DomainTask, GetTasksResponse, UpdateTaskModel } from "./tasksApi.types"
 import { baseApi } from "../../../app/baseApi"
